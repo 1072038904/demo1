@@ -155,12 +155,52 @@
                                     ${ran.rangeName}
                             </td>
                             <td >
-                                <button id="e${sta.index}">EDIT</button>
+                                <a id="modal-9251" href="#modal-container-9251" role="button" class="btn" data-toggle="modal">编辑</a>
                             </td>
                             <td>
                                 DELETE
                             </td>
                         </tr>
+                        <div class="modal fade" id="modal-container-9251" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            标题
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-2 control-label">x：</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control" id="inputEmail3" placeholder="${ran.x}"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="col-sm-2 control-label">y：</label>
+                                                <div class="col-sm-10">
+                                                    <input type="password" class="form-control" id="inputPassword3" placeholder="${ran.y}"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputRangeName3" class="col-sm-2 control-label">范围名称：</label>
+                                                <div class="col-sm-10">
+                                                    <input type="password" class="form-control" id="inputRangeName3" placeholder="${ran.rangeName}" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -169,7 +209,9 @@
                         <a>当前页：${rangePage.currPage}</a>
                     </li>
                     <li>
+                        <c:if test="${rangePage.currPage>1}">
                          <a href="<%=basePath%>range/getRangeByPage?currentPage=${rangePage.currPage-1}">上一页</a>
+                        </c:if>
                     </li>
                     <li>
                          <a href="<%=basePath%>range/getRangeByPage?currentPage=1">1</a>
@@ -178,16 +220,15 @@
                          <a href="<%=basePath%>range/getRangeByPage?currentPage=2">2</a>
                     </li>
                     <li>
-                         <a href="<%=basePath%>range/getRangeByPage?currentPage=3">3</a>
+                         <a >...</a>
                     </li>
                     <li>
-                         <a href="#">...</a>
+                         <a href="<%=basePath%>range/getRangeByPage?currentPage=${rangePage.totalPage}">${rangePage.totalPage}</a>
                     </li>
                     <li>
-                         <a href="<%=basePath%>range/getRangeByPage?currentPage=${rangePage.totalCount}">${rangePage.totalCount}</a>
-                    </li>
-                    <li>
+                        <c:if test="${rangePage.currPage<rangePage.totalPage}">
                          <a href="<%=basePath%>range/getRangeByPage?currentPage=${rangePage.currPage+1}">下一页</a>
+                        </c:if>
                     </li>
                 </ul>
                 <div class="row clearfix">
@@ -195,9 +236,6 @@
                         <h3>
                             <strong>时间阈值管理</strong>
                         </h3>
-                    </div>
-                    <div class="col-md-6 column">
-                         <button type="button" class="btn btn-default">编辑</button>
                     </div>
                 </div>
                 <table class="table table-bordered">
@@ -370,7 +408,6 @@
               window.open ("<%=basePath%>range/editRange", "newwindow", "height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no")
           });
         }
-
     </script>
 </body>
 

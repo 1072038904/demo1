@@ -1,20 +1,20 @@
 package com.service.impl;
 
-import com.dao.RangeThresholdDao;
+import com.mapper.RangeThresholdDao;
 import com.pojo.Hot;
 import com.pojo.RangeThreshold;
 import com.pojoPolicy.RangeThresholdPolicy;
 import com.pojoPolicy.imple.RangeThresholdPolicyImple;
 import com.service.RangeThresholdService;
 import com.util.PageBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
-public class RangeThresholdServiceImpl implements RangeThresholdService {
-    @Autowired
+@Transactional
+public class RangeThresholdServiceImpl extends BaseServiceImpl<RangeThreshold> implements RangeThresholdService {
     private RangeThresholdDao rangeThresholdDao;
     private RangeThresholdPolicy rangeThresholdPolicy = new RangeThresholdPolicyImple();
 
@@ -97,7 +97,7 @@ public class RangeThresholdServiceImpl implements RangeThresholdService {
         pageBean.setTotalCount(totalCount);
 
         //封装总页数
-        double tc =totalCount;
+        double tc =Double.valueOf(totalCount)/Double.valueOf(pageSize);
         Double num = Math.ceil(tc);
         pageBean.setTotalPage(num.intValue());
 
@@ -109,7 +109,9 @@ public class RangeThresholdServiceImpl implements RangeThresholdService {
 
         return pageBean;
     }
-
+    public void testRange(RangeThreshold rangeThreshold){
+            this.save(rangeThreshold);
+    }
     public static void main(String args[]){
 //        List<Hot> hotList = new ArrayList<>();
         List<List<Hot>> resultList = new ArrayList<>();

@@ -1,4 +1,4 @@
-import com.dao.ClubInfroDao;
+import com.mapper.ClubInfroDao;
 import com.pojo.Club;
 import org.junit.Test;
 import org.junit.runner.RunWith;

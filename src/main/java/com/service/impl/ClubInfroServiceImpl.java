@@ -1,6 +1,6 @@
 package com.service.impl;
 
-import com.dao.ClubInfroDao;
+import com.mapper.ClubInfroDao;
 import com.pojo.Club;
 import com.service.ClubInfroService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,6 @@
-package com.dao;
+package com.mapper;
 
 import com.pojo.RangeThreshold;
-import com.util.PageBean;
 
 import java.util.HashMap;
 import java.util.List;

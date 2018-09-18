@@ -5,12 +5,11 @@ import com.service.RangeThresholdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("range")
@@ -53,7 +52,6 @@ public class    RangeThresholdController {
     /*分页显示所有时间阈值数据*/
     @RequestMapping("/getRangeByPage")
     public  String getRangePage(@RequestParam(value="currentPage",defaultValue="1",required=false)int currentPage,Model model){
-        System.out.print(currentPage);
         if(currentPage>=1)
             model.addAttribute("rangePage",rangeThresholdService.findByPage(currentPage));
         else model.addAttribute("rangePage",rangeThresholdService.findByPage(1));
@@ -63,8 +61,13 @@ public class    RangeThresholdController {
     @RequestMapping("/editRange")
     public  String editRange(@RequestParam(value="currentPage",defaultValue="1",required=false)int currentPage,Model model){
         if(currentPage>=1)
-            model.addAttribute("rangePage",rangeThresholdService.findByPage(currentPage));
+            model.addAttribute("rangePage",rangeThresholdService.findByPage(currentPage));//键值
         else model.addAttribute("rangePage",rangeThresholdService.findByPage(1));
         return "editThre";
+    }
+    /*分页显示所有时间阈值数据*/
+    @RequestMapping("/getMap")
+    public  String getMap(@RequestParam(value="currentPage",defaultValue="1",required=false)int currentPage,Model model){
+        return "hotmap";
     }
 }

@@ -1,4 +1,5 @@
-import com.dao.RangeThresholdDao;
+import com.mapper.RangeThresholdDao;
+import com.mapper.RangeThresholdMapper;
 import com.pojo.RangeThreshold;
 import com.service.RangeThresholdService;
 import com.util.PageBean;
@@ -19,6 +20,8 @@ public class RangeThresholdDaoTest {
     @Autowired
     private RangeThresholdService rangeThresholdService;
     // 点是否存在
+    @Autowired
+    private RangeThresholdMapper rangeThresholdD;
     @Test
     public void testIsHotExisted() {
         RangeThreshold rangeThreshold = new RangeThreshold();
@@ -81,6 +84,17 @@ public class RangeThresholdDaoTest {
     @Test
     public  void getRangeByPage(){
         PageBean<RangeThreshold> rangeThresholdPageBean = rangeThresholdService.findByPage(1);
-        System.out.print(rangeThresholdPageBean.getLists().get(0).getRangeName());
+        System.out.print(rangeThresholdPageBean.getTotalPage());
+        //System.out.print(rangeThresholdPageBean.getLists().get(0).getRangeName());
+
+    }
+    @Test
+    public void getR(){
+        RangeThreshold rangeThreshold = new RangeThreshold();
+        rangeThreshold.setX(1);
+        rangeThreshold.setY(2);
+        rangeThreshold.setRangeName("1213");
+        rangeThresholdService.save(rangeThreshold);
+        //System.out.print(rangeThresholdService.testRange(rangeThreshold).getX());
     }
 }

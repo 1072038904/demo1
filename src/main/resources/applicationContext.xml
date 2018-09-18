@@ -2,14 +2,17 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:context="http://www.springframework.org/schema/context"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns="http://www.springframework.org/schema/beans"
+	   xmlns="http://www.springframework.org/schema/beans" xmlns:task="http://www.springframework.org/schema/mvc"
+	   xmlns:jaxws="http://cxf.apache.org/jaxws"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd">
-
+       http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
+	   default-lazy-init="false">
+	<task:annotation-driven/>
+	<tx:annotation-driven/>
 	<!-- 扫描service包下所有使用注解的类型 -->
 	<context:component-scan base-package="com.service"/>
 
@@ -37,16 +40,29 @@
 		<property name="typeAliasesPackage" value="com.pojo"/>
 		<!-- 扫描sql配置文件:mapper需要的xml文件 -->
 		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+		<property name="plugins">
+			<array>
+				<!-- 现在很流行的PageHelper分页插件 -->
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=mysql
+							returnPageInfo=check
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
 	</bean>
 
-	<!-- 配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<!-- 注入sqlSessionFactory -->
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-		<!-- 给出需要扫描Dao接口包 -->
-		<property name="basePackage" value="com.dao"/>
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.mapper" />
+		<property name="properties">
+			<value>
+				mappers=tk.mybatis.mapper.common.Mapper
+			</value>
+		</property>
 	</bean>
-
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<!-- 注入数据库连接池 -->
@@ -55,5 +71,9 @@
 
 	<!-- 配置基于注解的声明式事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
+	<bean id="loginService"  class="com.atguigu.day02_ws_cxf_spring.ws.LoginServiceImpl"/>
+	<jaxws:endpoint implementor="#loginService" address="/login"/>
 </beans>

@@ -7,7 +7,7 @@ import com.util.PageBean;
 import java.util.List;
 import java.util.Map;
 
-public interface RangeThresholdService {
+public interface RangeThresholdService extends BaseService<RangeThreshold> {
     // 判断是否存在记录
     int isExisted(RangeThreshold rangeThreshold);
     //查询出点
@@ -24,4 +24,5 @@ public interface RangeThresholdService {
     List<RangeThreshold> getAllRangeThre();
     /*分页查询所有的范围数据*/
     PageBean<RangeThreshold> findByPage(int currentPage);
+    public void testRange(RangeThreshold rangeThreshold);
 }
